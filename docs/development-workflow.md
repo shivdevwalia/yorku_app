@@ -28,10 +28,19 @@ Dispatch implementation with `delegate_task`, `isolation: "worktree"`. Let T3 pr
 
 ## Dependencies and bases
 
-- Independent work starts from the default remote branch (`origin/main` here), refreshed from origin. Honor an explicitly requested base. Without a remote, use the local default branch.
-- Work requiring unpublished commits starts from the local branch or exact commit containing those changes. Include the required SHA and dependency in the brief; do not silently substitute `origin/main`.
-- Serialize overlapping or dependent edits by default. Wait for the prerequisite result, verify its SHA, then dispatch the dependent task with that base. The manager integrates in dependency order and resolves conflicts before review.
-- Keep each branch scoped to its issue. Record any base changes and revalidate the resulting head before handing it off.
+`delegate_task` with `isolation: "worktree"` starts from the parent's current commit. It has no `baseRef` parameter, and uncommitted edits are excluded. A base named in a brief does not select the checkout base.
+
+Before each implementation dispatch:
+
+1. Choose the required base. For independent work, fetch origin and resolve `origin/main` to an exact SHA. Honor an explicitly requested base. Without a remote, resolve the local default branch. For dependent work, first wait for the prerequisite result, verify its commit is available locally, and resolve that required branch or commit to an exact SHA.
+2. Inspect the parent checkout with `git status --short`, `git branch --show-current`, and `git rev-parse HEAD`. Require a clean checkout and no other agent actively editing that checkout before switching it. Preserve user changes; never reset, clean, or silently stash them to prepare a task.
+3. If HEAD differs from the required SHA, align the parent checkout with `git switch --detach <required-SHA>` only when that clean, idle checkout can safely be switched. Record its original branch/HEAD first. If switching would interfere with user work or the manager's T3 workspace binding, stop dispatch and resolve that workspace constraint explicitly; do not claim the brief changes the base.
+4. Verify `git rev-parse HEAD` equals the required SHA, then call `delegate_task` with `isolation: "worktree"`. Require the worker's first action to compare its starting `git rev-parse HEAD` with the expected SHA before making edits. A mismatch blocks implementation and must be reported to the manager.
+5. After T3 has prepared the child checkout, restore any temporary parent checkout change to the recorded branch/HEAD, provided it is still clean and idle. Record the actual child starting SHA, dependency, branch, and final SHA in the result/PR.
+
+Serialize overlapping or dependent edits by default, and integrate in dependency order. Keep each branch scoped to its issue. If a base changes, revalidate the resulting head before handoff.
+
+`t3_thread_launch` accepts `workspaceStrategy.baseRef`, but creates an independent top-level thread rather than a delegated child. Use it only when the user explicitly requests a new thread; it is not a workaround for ordinary worker delegation. Never create worker worktrees in the shell or ask a child to create its own checkout.
 
 ## Completion and independent review
 
