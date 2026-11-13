@@ -2,7 +2,7 @@
 
 ## Status and product
 
-Approved baseline for [issue #3](https://github.com/shivdevwalia/yorku_app/issues/3), with Python mandatory for the backend. Documentation is awaiting merge/review. Milestone-0 execution is not authorized. See [roadmap](milestone-roadmap.md) and [handoff](manager-handoff.md).
+Approved baseline for [issue #3](https://github.com/shivdevwalia/yorku_app/issues/3), with Python mandatory for the backend. Inspect issue #3 and its linked PR for current documentation review/merge status. Baseline approval alone does not authorize milestone-0 execution; check for subsequent explicit execution authorization. See [roadmap](milestone-roadmap.md) and [handoff](manager-handoff.md).
 
 Long-term: all-in-one academic planning across York faculties. First release: trustworthy next-term planning, not enrolment or official advice. All faculties supported by design; features enabled only for validated coverage. EECS/MATH plus connected subjects are candidates, not fixed pilot scope until data feasibility. Advanced professional/graduate programs come later.
 

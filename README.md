@@ -16,4 +16,4 @@ This repository has no application dependencies, build command, or tests yet. No
 - [Milestone roadmap](docs/milestone-roadmap.md)
 - [Manager handoff](docs/manager-handoff.md)
 
-Documentation is awaiting merge/review; baseline approval does not authorize milestone-0 execution, merge, or deployment.
+Check [issue #3](https://github.com/shivdevwalia/yorku_app/issues/3) and its linked PR for current documentation review/merge status. Baseline approval alone does not authorize milestone-0 execution, merge, or deployment.

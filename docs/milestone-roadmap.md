@@ -1,6 +1,6 @@
 # Milestone roadmap
 
-Read [product baseline](product-plan.md), [handoff](manager-handoff.md), [workflow](development-workflow.md). Documentation awaiting merge/review; no execution or extra milestone issues authorized here. No delivery date until data feasibility; later estimates require measured scope/evidence.
+Read [product baseline](product-plan.md), [handoff](manager-handoff.md), [workflow](development-workflow.md). Inspect [issue #3](https://github.com/shivdevwalia/yorku_app/issues/3) and its linked PR for current documentation review/merge status; baseline approval alone authorizes no execution or extra milestone issues. No delivery date until data feasibility; later estimates require measured scope/evidence.
 
 ## 0 — Source and rights feasibility
 

@@ -2,21 +2,21 @@
 
 ## State and boundaries
 
-[Issue #3](https://github.com/shivdevwalia/yorku_app/issues/3) prepares the approved [product baseline](product-plan.md) and [roadmap](milestone-roadmap.md). Python backend mandatory; frontend Next.js/TypeScript. Documentation awaiting merge/review: inspect actual PR status, never assume merge. Mutable head/PR/T3 identifiers belong in implementation return/PR, not a guessed future head here.
+[Issue #3](https://github.com/shivdevwalia/yorku_app/issues/3) prepares the approved [product baseline](product-plan.md) and [roadmap](milestone-roadmap.md). Python backend mandatory; frontend Next.js/TypeScript. Inspect issue #3 and its linked PR for current documentation review/merge status; do not reopen completed review or approval work. Mutable head/PR/T3 identifiers belong in implementation return/PR, not a guessed future head here.
 
 Verified starting SHA: `cd9db8eb9e8d3ece367ce8cc29058bd4513c8b5d`; implementation branch `t3/yorku-planning-docs`; draft PR target `main`. No dependency work bundled.
 
 Today: documentation/templates and `assets/icon.svg`; no app dependencies/toolchain, build command, tests, or configured CI validation. No app tests or production extraction run for this task.
 
-Approved: product baseline and documentation preparation. Not authorized: milestone-0 execution, scraping/data collection, app code, dependencies, deployment, extra milestone issues, merge. Final explicit approval precedes merge/deployment; draft PR is review handoff only.
+At baseline approval, authorized scope was product baseline and documentation preparation. That approval did not authorize: milestone-0 execution, scraping/data collection, app code, dependencies, deployment, extra milestone issues, merge. Final explicit approval precedes merge/deployment; draft PR is review handoff only.
 
 Access/scraping authorization is context for future work, not execution permission here. Redistribution/retention/display and third-party rights separately unverified. No verified production feed/parser; daily refresh provisional. EECS/MATH plus connected subjects candidates, not fixed pilot.
 
 ## Next manager
 
 1. Read [AGENTS.md](../AGENTS.md), [workflow](development-workflow.md), product plan, roadmap. Inspect status, exact branch/base/head, open issues/PRs, active T3 work before edits/dispatch.
-2. Resolve documentation review/merge status accurately; arrange exact-SHA independent review as needed and request final merge approval. Baseline approval is not execution approval.
-3. Request explicit milestone-0 authorization. Until granted, do not fetch datasets, scrape, implement, install dependencies, create extra milestone issues, deploy.
+2. Check issue #3 and its linked PR. If already merged, continue without repeating completed review/approval. If open, resolve remaining findings and obtain final merge approval. Baseline approval is not execution approval.
+3. Check for subsequent explicit milestone-0 authorization; request it if absent. Until granted, do not fetch datasets, scrape, implement, install dependencies, create extra milestone issues, deploy.
 4. Once authorized, execute only approved source/rights inventory, representative rules/data audit, feasibility/pilot selection. Record unresolved rights, refresh evidence, go/no-go. Request next-scope approval at exit, not blanket multi-milestone authorization.
 
 ## Coordination and validation
