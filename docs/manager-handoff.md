@@ -12,6 +12,12 @@ At baseline approval, authorized scope was product baseline and documentation pr
 
 On November 13, 2026 the user explicitly authorized milestone-0 documentation/research under [issue #5](https://github.com/shivdevwalia/yorku_app/issues/5): small representative public-source inspection, rights inventory and feasibility/pilot recommendation. No bulk extraction, authentication, app code or dependencies. Milestone 1 is NOT authorized. Rights remain unresolved; no verified feed/parser or live section bundles. Audit proposes a conditional eight-course catalog review set; public replicated catalog and verified scheduling remain no-go.
 
+## Subsequent collection authorization and correction
+
+On November 13, 2026 the user explicitly attested full authorization to scrape/obtain York data and instructed collection to proceed. Bounded public-source collection is authorized; do not ask again or treat access-permission uncertainty as a research blocker. No access-control bypass or private records. Downstream retention/redistribution/public-display/third-party rights are not independently verified; milestone-1 app implementation, dependencies, merge and deployment remain separate approval boundaries.
+
+Read the [audit follow-up correction](milestone-0/README.md#authorization-and-follow-up-correction): /cds is enrolled Class Schedule View, not proof public course search requires login. Anonymous public pages expose Winter 2027 catalogue identifiers; current section/component/meeting data remains technically unverified. Prior no-collection instructions below refer to initial scope and are superseded by this authorization. The original PR head passed independent review without blocking findings; later changes are not covered by that exact-SHA review.
+
 ## Next manager
 
 1. Read [AGENTS.md](../AGENTS.md), [workflow](development-workflow.md), product plan, roadmap. Inspect status, exact branch/base/head, open issues/PRs, active T3 work before edits/dispatch.
