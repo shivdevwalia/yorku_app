@@ -16,4 +16,4 @@ This repository has no application dependencies, build command, or tests yet. No
 - [Milestone roadmap](docs/milestone-roadmap.md)
 - [Manager handoff](docs/manager-handoff.md)
 
-Check [issue #3](https://github.com/shivdevwalia/yorku_app/issues/3) and its linked PR for current documentation review/merge status. Baseline approval alone does not authorize milestone-0 execution, merge, or deployment.
+Baseline [PR #4](https://github.com/shivdevwalia/yorku_app/pull/4) merged and issue #3 closed. User authorized documentation/research milestone 0 on November 13, 2026 under [issue #5](https://github.com/shivdevwalia/yorku_app/issues/5); see the [audit and conditional pilot recommendation](docs/milestone-0/README.md). Milestone 1 is not authorized. Final explicit approval still precedes merge/deployment.
