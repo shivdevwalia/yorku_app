@@ -9,3 +9,11 @@ Start development by reading [AGENTS.md](AGENTS.md) and the [development workflo
 Use the [PR template](.github/pull_request_template.md) to return the exact commit and validation evidence. Final explicit user approval is required before merge or deployment.
 
 This repository has no application dependencies, build command, or tests yet. No installation is required for documentation work.
+
+## Academic planner baseline
+
+- [Product plan](docs/product-plan.md)
+- [Milestone roadmap](docs/milestone-roadmap.md)
+- [Manager handoff](docs/manager-handoff.md)
+
+Check [issue #3](https://github.com/shivdevwalia/yorku_app/issues/3) and its linked PR for current documentation review/merge status. Baseline approval alone does not authorize milestone-0 execution, merge, or deployment.
