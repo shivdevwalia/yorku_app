@@ -7,8 +7,9 @@ CATALOG_ID = '691dc968c6306e23358308fc'
 CALENDAR = '2026-2027'
 API_BASE = 'https://york.kuali.co/api/v1/catalog'
 CHECKLIST_URL = 'https://lassonde.yorku.ca/student-life/2026-2027-program-checklists'
-PARSER_VERSION = '1.3.1'
-COURSE_PATTERN = re.compile(r'(?<![A-Z])(?:(?P<faculty>[A-Z]{2})\s*/\s*)?(?P<subject>[A-Z]{2,5})\s*/?\s*(?P<number>\d{4})(?!\d)')
+PARSER_VERSION = '1.4.0'
+COURSE_PATTERN = re.compile(r'(?<![A-Z])(?:(?P<faculty>[A-Z]{2}(?:\s*/\s*[A-Z]{2})*)(?:\s*/\s*|\s+(?=[A-Z]{3,5}\s*\d)))?(?P<subject>[A-Z]{2,5})\s*/?\s*(?P<number>\d{4})(?!\d)')
+ABBREVIATED_COURSE = re.compile(r'\s*(?:,\s*(?:(?:and|or)\s+)?|(?:and|or)\s+|/\s*)(?P<number>\d{4})(?!\d|\.\d|\s*(?:credits?|credit hours?)\b)', re.IGNORECASE)
 PREREQUISITE_LABEL = r'pre[\-\u2010\u2011]?(?:requis(?:ite|te)|requite)(?:s|\(s\))?'
 COREQUISITE_LABEL = r'co[\-\u2010\u2011]?(?:requis(?:ite|te)|requsitie)(?:s|\(s\))?'
 SECTION_PATTERN = re.compile(r'(?i)\b(?P<label>' + PREREQUISITE_LABEL + r'\s*(?:and|or|/)\s*' + COREQUISITE_LABEL + r'|' + PREREQUISITE_LABEL + r'|' + COREQUISITE_LABEL + r'|course\s+credit\s+exclusions?|credit\s+exclusions?|cross-?listed(?:\s+(?:to|with|as))?|previously\s+offered\s+as|notes?|recommended(?:\s+preparation)?|not\s+open\s+to|open\s+to)(?:\s*:|\s+include\s+|\s+are\s+|\s+(?=(?:[A-Z]{2}\s*/\s*)?[A-Z]{2,5}\s*\d{4})|\s+(?=(?:cumulative|completion|permission|minimum|one|any|none)\b)|\s+(?=and\s+previously\b|\d{4}\b))')
@@ -57,10 +58,20 @@ def references(text, known_ids):
         faculty, subject, number = match.group('faculty', 'subject', 'number')
         if not faculty and subject not in resolver.subjects:
             continue
-        candidates = resolver.candidates.get(f'{subject} {number}', [])
-        identifier = course_id(faculty, subject, number) if faculty else candidates[0] if len(candidates) == 1 else f'?/{subject} {number}'
-        if identifier not in found:
-            found.append(identifier)
+        numbers = [number]
+        end = match.end()
+        while abbreviated := ABBREVIATED_COURSE.match(text, end):
+            numbers.append(abbreviated.group('number'))
+            end = abbreviated.end()
+        for number in numbers:
+            candidates = resolver.candidates.get(f'{subject} {number}', [])
+            # Multiple explicit faculties are not interchangeable identities.
+            if faculty:
+                identifier = course_id('?' if '/' in faculty else faculty, subject, number)
+            else:
+                identifier = candidates[0] if len(candidates) == 1 else f'?/{subject} {number}'
+            if identifier not in found:
+                found.append(identifier)
     return found
 
 
@@ -96,7 +107,13 @@ def requirement_sections(description, known_ids):
 
 def extraction_warnings(description):
     matches = list(SECTION_PATTERN.finditer(description))
-    return ['Unrecognized requirement-like heading: ' + candidate.group().strip() for candidate in REQUIREMENT_LIKE_PATTERN.finditer(description) if not any(match.start() <= candidate.start() and candidate.end() <= match.end() for match in matches)]
+    warnings = ['Unrecognized requirement-like heading: ' + candidate.group().strip() for candidate in REQUIREMENT_LIKE_PATTERN.finditer(description) if not any(match.start() <= candidate.start() and candidate.end() <= match.end() for match in matches)]
+    for match in COURSE_PATTERN.finditer(description):
+        if '/' in (match.group('faculty') or ''):
+            warnings.append('Ambiguous faculty in course reference: ' + match.group().strip())
+        if re.match(r'\s*(?:[-–—]|to\b|through\b)\s*\d{4}\b', description[match.end():], re.IGNORECASE):
+            warnings.append('Unsupported abbreviated course range: ' + description[match.start():match.end() + 30].strip())
+    return warnings
 
 
 def normalize_index(rows):

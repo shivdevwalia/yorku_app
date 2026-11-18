@@ -6,7 +6,7 @@ from http.server import ThreadingHTTPServer
 from urllib.error import HTTPError
 from urllib.request import urlopen
 
-from backend.catalog import extraction_warnings, requirement_sections
+from backend.catalog import extraction_warnings, references, requirement_sections
 from backend.server import Catalog, handler_for
 
 
@@ -36,6 +36,25 @@ class CatalogTests(unittest.TestCase):
         sections = self.sections('Prerequisites: EECS 1000. Prior to Fall 2025: Prerequisites: EECS 3000.')
         self.assertEqual([s['kind'] for s in sections], ['prerequisite', 'historical'])
         self.assertEqual(sections[0]['references'], ['LE/EECS 1000'])
+
+    def test_abbreviated_lists_inherit_subject(self):
+        for text in ['EECS 1000, 2000, or 3000.', 'LE/EECS 1000 and 2000/3000']:
+            with self.subTest(text=text):
+                self.assertEqual(references(text, self.ids), self.ids[:3])
+
+    def test_inherited_faculty_is_never_guessed(self):
+        known = ['LE/EECS 1000', 'LE/EECS 2000', 'SC/EECS 2000']
+        self.assertEqual(references('EECS 1000 or 2000', known), ['LE/EECS 1000', '?/EECS 2000'])
+        self.assertEqual(references('LE/EECS 1000 or 2000', known), known[:2])
+        text = 'LE/SC COOP 3002, 3003, or 3004'
+        self.assertEqual(references(text, ['SC/COOP 3002']), ['?/COOP 3002', '?/COOP 3003', '?/COOP 3004'])
+        self.assertTrue(extraction_warnings(text))
+
+    def test_ranges_warn_and_prose_does_not_inherit_subject(self):
+        self.assertTrue(extraction_warnings('Prerequisites: EECS 1000-3000'))
+        for text in ['EECS 1000 before 2025', 'EECS 1000. In 2025', 'EECS 1000 or 2000.5 credits']:
+            with self.subTest(text=text):
+                self.assertEqual(references(text, self.ids), [self.ids[0]])
 
     def catalog(self):
         courses = []

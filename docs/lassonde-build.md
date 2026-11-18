@@ -128,3 +128,14 @@ remain outside the application commit. Merge and deployment require approval.
 
 Parent T3 thread for this completion pass: `5965e064-562b-43f5-8596-32e586bd6a1b`.
 Base: `44515845576cc84ebec8988fb2bc7e138705eef5`; no prerequisite PRs.
+
+Independent review of `ca0222133daadaab2501b9affd5b0005643fb003` found
+one P2 omission: abbreviated alternatives lost their inherited subject. Parser
+1.4.0 now retains comma, and/or and slash-separated numeric alternatives.
+Explicit multiple-faculty references remain unresolved with a visible warning;
+faculty-free ambiguous identifiers remain unresolved rather than guessed.
+Numeric ranges remain unsupported and now produce a visible warning.
+Eleven offline regressions, Python compilation and generated type checks passed
+after the fix. The original review does not cover this subsequent fix; these
+small review changes were validated by the parent per the repository workflow.
+Review task: `1c520fb2-0f43-48ba-972f-a0cd1946198c`.
