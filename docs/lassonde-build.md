@@ -139,3 +139,9 @@ Eleven offline regressions, Python compilation and generated type checks passed
 after the fix. The original review does not cover this subsequent fix; these
 small review changes were validated by the parent per the repository workflow.
 Review task: `1c520fb2-0f43-48ba-972f-a0cd1946198c`.
+
+After the review fix, a bounded re-import completed with 37 requests and zero
+retrieval failures: 426/426 Lassonde details and 33/35 extracted checklists.
+Snapshot validation, all 33 degree graph schemas, and actual EECS 3100's three
+unresolved COOP alternatives plus visible ambiguity warning passed. This later
+re-import supersedes the earlier completion-pass statement that no import ran.
